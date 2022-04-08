@@ -1,0 +1,9 @@
+---
+# vars file for apache
+#
+
+apache_port: 80
+apache_user: apache
+apache_group: apache
+apache_admin_email: ansiblemaster@gmail.com
+
