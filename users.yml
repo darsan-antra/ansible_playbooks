@@ -1,0 +1,45 @@
+---
+
+- name: Create users on node1 and node2
+  hosts: webservers
+  become: yes
+
+  vars:
+    ansible_become_pass: "vagrant"
+
+  tasks:
+  
+  - name: add a group called devops
+    ansible.builtin.group:
+      name: devops
+      state: present
+  
+  - name: add a group called devops
+    ansible.builtin.group:
+      name: devsecops
+      state: present
+
+  - name: add a group called devops
+    ansible.builtin.group:
+      name: sre
+      state: present
+
+  - name: create 5 users in node1 and node2 servers
+    ansible.builtin.user:
+      name: "{{ item.name }}"
+      comment: devops group member
+      group: "{{ item.group }}"
+    loop:
+      - { name: 'den', group: 'devops' }
+      - { name: 'fas', group: 'devops' }
+      - { name: 'arn', group: 'devsecops' }
+      - { name: 'bez', group: 'devsecops' }
+      - { name: 'fir', group: 'sre' }
+
+  - name: createing a file called atra-employees
+    ansible.builtin.file:
+      path: /tmp/antra-employees
+      state: touch
+      mode: u=rwx,g=rwx
+      group: devops
+...

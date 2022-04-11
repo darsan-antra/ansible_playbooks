@@ -6,3 +6,8 @@
     name: httpd
     state: restarted
 
+- name: restart apache2 service
+  ansible.builtin.service:
+    name: apache2
+    state: restarted
+

@@ -1,25 +1,8 @@
 ---
 # tasks file for apache
 
-- name: install httpd
-  ansible.builtin.yum:
-    name: httpd
-    state: present
+- include_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"
 
-- name: copy the index file
-  ansible.builtin.copy:
-    src: index.html
-    dest: /var/www/html/index.html
-
-- name: start httpd service
-  ansible.builtin.service:
-    name: httpd
-    state: started
-    enabled: yes
-
-- name: reconfigure apache to run on port 8080
-  ansible.builtin.template:
-    src: httpd.conf.j2
-    dest: /etc/httpd/conf/httpd.conf
-  notify:
-    - restart httpd service
+- include_tasks: ubuntu.yml
+  when: ansible_os_family == "Debian"

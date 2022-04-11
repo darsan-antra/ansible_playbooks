@@ -1,0 +1,17 @@
+---
+- name: example of register
+  hosts: webservers
+  become: yes
+
+  vars:
+    ansible_become_pass: "vagrant"
+
+  tasks:
+  
+  - name: find all passwd files in /etc in {{ inventory_hostname }}
+    ansible.builtin.shell: "find /etc -name passwd*"
+    register: find_results
+
+  - debug:
+      var: find_results
+    when: find_results.stdout != ""
